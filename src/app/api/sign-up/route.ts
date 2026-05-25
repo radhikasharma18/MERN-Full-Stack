@@ -1,10 +1,10 @@
-import dbConnect from "@/src/lib/dbConnect";
-import User from "@/src/modules/User"; 
+import dbConnect from "@/src/lib/dbConnect"; 
 import bcrypt from "bcryptjs";
 import {sendVerificationEmail} from "@/src/helpers/sendVerificationEmail";
 import UserModel from "@/src/modules/User";
 
 export async function POST(request: Request) {
+
   try {
     await dbConnect();  
     const { username, email, password } = await request.json();
@@ -15,8 +15,7 @@ export async function POST(request: Request) {
                 success: false,
                 message:"Username is already taken. Please choose a different username."
             },
-            {
-                status: 400 })
+            { status: 400 })
     }
    const existingUserByEmail = await UserModel.findOne({email})
    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
@@ -68,9 +67,7 @@ if(!emailResponse.success){
             success: false,
             message:emailResponse.message
         },
-        {
-            status: 500
-        }
+        { status: 500 }
     )
 
 }
@@ -79,9 +76,7 @@ return Response.json(
             success: true,
             message:"User registered successfully. Please check your email for the verification code."
         },
-        {
-            status: 500
-        }
+        { status: 201}
     )
 
 }
@@ -92,10 +87,9 @@ catch (error) {
             success: false,
             message:" An error occurred during sign-up. Please try again later."
         },
-        {        
-            status: 500
-        }
+        { status: 500}
     )
   }     
+
 }
 
