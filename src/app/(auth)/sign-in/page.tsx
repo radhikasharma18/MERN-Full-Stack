@@ -1,22 +1,25 @@
 'use client';
-import {useSession,signIn, signOut} from 'next-auth/react';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import link from "next/link";
+import { useState } from "react";
+import {useDebounceValue} from "usehooks-ts";
+export { Toaster, toast } from "sonner"
 
-export default function page() {
-    const {data:session} = useSession();
-  return (  
-    <div>
-        <h1>Sign In Page</h1>
-        {session ? (
-            <div>
-                <p>Welcome, {session.user?.name}</p>
-                <button onClick={() => signOut()}>Sign Out</button>
-            </div>  
-        ) : (
-            <div>
-                <p>You are not signed in.</p>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded"  onClick={() => signIn()}>Sign In</button>
-            </div>
-        )}
-    </div>
-  )
+
+const page = () =>{
+
+    const[username, setUsername] = useState('');
+    const[usenameMessage, setUsernameMessage] = useState('');
+    const[isCheckingUsername, setIsCheckingUsername] = useState(false);
+    const[isSubmitting, setIsSubmitting] = useState(false);
+
+    const debouncedUsername = useDebounceValue(username, 500); 
+
+
+
+    return(<div>Sign In Page</div>)
 }
+export default page;
