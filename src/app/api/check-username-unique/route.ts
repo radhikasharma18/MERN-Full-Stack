@@ -1,5 +1,5 @@
 import dbConnect from "@/src/lib/dbConnect";
-import userModel from "@/src//modules/User";
+import userModel from "@/src/modules/User";
 import {z} from "zod";
 import {usernameValidation} from "@/src/schemas/signUpSchema";
 
@@ -14,7 +14,6 @@ export async function GET(request: Request){
             username:searchParams.get("username") 
         } 
 const result = UsernameQuerySchema.safeParse(queryParams);
-   console.log(result);//todo remove this log
       if(!result.success){
         const usernameError = result.error.format().username?._errors || [];
         return Response.json({
