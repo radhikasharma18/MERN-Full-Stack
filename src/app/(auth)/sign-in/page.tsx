@@ -8,6 +8,7 @@ import { useDebounceValue } from "usehooks-ts";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signUpSchema as SignUpSchema } from "@/src/schemas/signUpSchema";
+import axios from "axios";
 
 const page = () => {
     const [username, setUsername] = useState('');
@@ -29,24 +30,23 @@ const page = () => {
       let isMounted = true;
 
       const checkUsernameUnique = async () => {
-        if (debouncedUsername.trim() === '') {
+        if (debouncedUsername) {
+          setIsCheckingUsername(true);
           setUsernameMessage('');
-          return;
+          try{
+            await axios.get("/api/check-username-unique", {
+              params: { username: debouncedUsername }
+            });
+          } catch (error) {
+            setUsernameMessage('Username is already taken');
+          } finally {
+            setIsCheckingUsername(false);
+          }
         }
 
-        setIsCheckingUsername(true);
-        // TODO: Add actual username uniqueness check here
-        if (!isMounted) return;
-        setUsernameMessage('');
-        setIsCheckingUsername(false);
-      };
-
-      checkUsernameUnique();
-
-      return () => {
-        isMounted = false;
-      };
+      }
     }, [debouncedUsername]);
+  
 
         return(
         <div>Sign Up Page</div>
