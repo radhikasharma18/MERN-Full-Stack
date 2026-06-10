@@ -1,42 +1,25 @@
 import OpenAI from "openai";
-import { OpenAIStream, StreamingTextResponse } from "ai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const runtime = "edge";
-
-export async function POST(req: Request) {
+export async function POST() {
   try {
-    const prompt =
-      "Create a list of three open-ended and engaging questions";
-
-    const response = await openai.completions.create({
-      model: "gpt-3.5-turbo-instruct",
-      max_tokens: 400,
-      stream: true,
-      prompt,
+    const response = await openai.responses.create({
+      model: "gpt-4.1-mini",
+      input: "Create a list of three open-ended and engaging questions",
     });
 
-    const stream = OpenAIStream(response);
-
-    return new StreamingTextResponse(stream);
-
+    return Response.json({
+      message: response.output_text,
+    });
   } catch (error) {
-    const status = 500;
-    if (error instanceof Error) {
-      const { name, message } = error;
-      return new Response(JSON.stringify({ name, message }), {
-        status,
-        headers: { "Content-Type": "application/json" },
-      });
-    } else {
-      console.error("Unexpected error:", error);
-      return new Response(JSON.stringify({ message: "Unexpected error" }), {
-        status,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+    console.error(error);
+
+    return Response.json(
+      { error: "Failed to generate questions" },
+      { status: 500 }
+    );
   }
 }
