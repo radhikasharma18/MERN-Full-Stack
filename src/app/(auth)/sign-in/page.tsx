@@ -9,6 +9,10 @@ import { useRouter } from 'next/navigation';
 import { signUpSchema as SignUpSchema } from '@/src/schemas/signUpSchema';
 import axios, { AxiosError } from 'axios';
 import { toast } from "sonner";
+import {Form, FormControl, FormField, FormItem, FormLabel}  from "@/components/ui/form";
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Link, Loader2 } from 'lucide-react';
 
 interface ApiResponse {
   success: boolean;
@@ -86,17 +90,118 @@ const Page = () => {
    }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
-            <div className='text-center'>
-                <h1 className='text-4xl font-extrabold tracking-tight lg:text-5xl mb-6'>Join Mystrey Messages</h1>
-                <p className='text-gray-600 mb-4'>Create an account to get started.</p>
+  
 
-            </div>
-            <div></div>
-        </div>
+  <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+    <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-md">
+      <div className="text-center">
+        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
+          Join Mystery Message
+        </h1>
+
+        <p className="text-gray-600">
+          Sign up to start your anonymous adventure
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-5"
+        >
+          {/* Username */}
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="username"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setUsername(e.target.value);
+                    }}
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
+
+          {/* Email */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="email"
+                    {...field}
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
+
+          {/* Password */}
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="password"
+                    {...field}
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please Wait
+              </>
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
+        </form>
+      </Form>
+
+      <div className="text-center">
+        <p className="text-sm text-gray-600">
+          Already a member?{" "}
+          <Link
+            href="/sign-in"
+            className="text-blue-600 hover:text-blue-800 font-medium b-2 border border-blue-600"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
     </div>
-  );
+  </div>
+);
+
+
 };
 
 export default Page;  

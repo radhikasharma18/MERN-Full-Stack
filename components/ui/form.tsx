@@ -1,71 +1,61 @@
-"use client";
+"use client"
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import * as React from "react"
+import {
+  Controller,
+  FormProvider,
+  useFormContext,
+  type ControllerProps,
+  type FieldPath,
+  type FieldValues,
+} from "react-hook-form"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+const Form = FormProvider
 
-const formSchema = z.object({
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+const FormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
+  ...props
+}: ControllerProps<TFieldValues, TName>) => {
+  return <Controller {...props} />
+}
 
-type FormData = z.infer<typeof formSchema>;
+const FormItem = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={className} {...props} />
+))
+FormItem.displayName = "FormItem"
 
-export default function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  });
+const FormLabel = React.forwardRef<
+  HTMLLabelElement,
+  React.LabelHTMLAttributes<HTMLLabelElement>
+>(({ ...props }, ref) => <label ref={ref} {...props} />)
+FormLabel.displayName = "FormLabel"
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+const FormControl = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ ...props }, ref) => <div ref={ref} {...props} />)
+FormControl.displayName = "FormControl"
+
+const FormMessage = () => {
+  const { formState } = useFormContext()
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-sm space-y-4 border p-6 rounded-xl"
-      >
-        <div>
-          <Label>Email</Label>
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
+    <p className="text-sm text-red-500">
+      {Object.values(formState.errors)[0]?.message as string}
+    </p>
+  )
+}
 
-        <div>
-          <Label>Password</Label>
-          <Input
-            type="password"
-            placeholder="Enter your password"
-            {...register("password")}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-      </form>
-    </div>
-  );
+export {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
 }
