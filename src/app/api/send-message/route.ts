@@ -3,9 +3,8 @@ import userModel from "@/src/modules/User";
 import {Message} from "@/src/modules/User";
 
 export async function POST(request: Request) {
-    await dbconnect();
-
     try {
+        await dbconnect();
         const data = await request.json();
         const { username, content } = data;
 

@@ -126,9 +126,11 @@ const Page = () => {
                     }}
                   />
                   {isCheckingUsername && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-                  <p className={`mt-1 text-sm ${usernameMessage==="Username is unique" ? 'text-red-600' : 'text-green-600'}`}>
-                   test {usernameMessage}
-                  </p>
+                  {usernameMessage && (
+                    <p className={`mt-1 text-sm ${usernameMessage === "Username is available." ? 'text-green-600' : 'text-red-600'}`}>
+                      {usernameMessage}
+                    </p>
+                  )}
                 </FormControl>
                 
               </FormItem>

@@ -5,21 +5,21 @@ import userModel from "@/src/modules/User";
 import { User } from "next-auth";
 
 export async function POST(request: Request) {
-    await dbConnect();
-
-    const session = await getServerSession(authOptions);
-
-    if(!session || !session.user) {
-        return Response.json({
-            message: "Unauthorized"
-        }, { status: 401 });
-    }
-
-    const user = session.user as User;
-    const userId = user._id;
-    const acceptMessages = await request.json();
-
     try{
+        await dbConnect();
+
+        const session = await getServerSession(authOptions);
+
+        if(!session || !session.user) {
+            return Response.json({
+                message: "Unauthorized"
+            }, { status: 401 });
+        }
+
+        const user = session.user as User;
+        const userId = user._id;
+        const acceptMessages = await request.json();
+
         const updatedUser = await userModel.findByIdAndUpdate(userId,
             { isAcceptingMessages: acceptMessages }, 
             { new: true });
@@ -45,18 +45,18 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-    await dbConnect();
-    const session = await getServerSession(authOptions);
-    const user = session?.user as User;
-    if(!session || !session.user) {
-        return Response.json({
-            message: "Unauthorized"
-        }, { status: 401 });
-    }
+    try{
+        await dbConnect();
+        const session = await getServerSession(authOptions);
+        const user = session?.user as User;
+        if(!session || !session.user) {
+            return Response.json({
+                message: "Unauthorized"
+            }, { status: 401 });
+        }
 
-    const userId = user._id;
-   try{
-     const foundUser = await userModel.findById(userId);
+        const userId = user._id;
+        const foundUser = await userModel.findById(userId);
      if (!foundUser) {
         return Response.json({
             success: false,

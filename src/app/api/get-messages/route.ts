@@ -7,18 +7,17 @@ import mongoose from "mongoose";
 
 
 export async function GET(request: Request) {
-
-    await dbConnect();
-    const session = await getServerSession(authOptions);
-
-    if(!session || !session.user) {
-        return Response.json({
-            message: "Unauthorized"
-        }, { status: 401 });
-    }
-
-    const userId = new mongoose.Types.ObjectId(session.user._id);
     try{
+        await dbConnect();
+        const session = await getServerSession(authOptions);
+
+        if(!session || !session.user) {
+            return Response.json({
+                message: "Unauthorized"
+            }, { status: 401 });
+        }
+
+        const userId = new mongoose.Types.ObjectId(session.user._id);
         const user = await userModel.aggregate([
             { $match: { _id: userId } },
             { $unwind:'$messages' },
