@@ -23,7 +23,9 @@ interface ApiResponse {
 const Page = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-   const router = useRouter();
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [usernameMessage, setUsernameMessage] = useState<string | null>(null);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
