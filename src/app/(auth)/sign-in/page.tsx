@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useDebounceCallback } from 'usehooks-ts';
 import { useRouter } from 'next/navigation';
 import { signInSchema} from '@/src/schemas/signInSchema';
 import axios, { AxiosError } from 'axios';
@@ -12,7 +11,7 @@ import { toast } from "sonner";
 import {Form, FormControl, FormField, FormItem, FormLabel}  from "@/components/ui/form";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Link, Loader2 } from 'lucide-react';
+import  Link  from 'next/link';
 import { signIn } from 'next-auth/react';
 
 interface ApiResponse {
@@ -22,8 +21,6 @@ interface ApiResponse {
 
 const Page = () => {
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [usernameMessage, setUsernameMessage] = useState<string | null>(null);
   const router = useRouter();
 
@@ -62,7 +59,7 @@ const Page = () => {
         </h1>
 
         <p className="text-gray-600">
-          Sign up to start your anonymous adventure
+          Sign in to start your anonymous adventure
         </p>
       </div>
 
@@ -77,43 +74,21 @@ const Page = () => {
             name="identifier"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>email</FormLabel>
+                <FormLabel>Email/Username</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="email"
+                    placeholder="email/username"
                     {...field}
                   />
-                  {isCheckingUsername && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-                  {usernameMessage && (
-                    <p className={`mt-1 text-sm ${usernameMessage === "Username is available." ? 'text-green-600' : 'text-red-600'}`}>
-                      {usernameMessage}
-                    </p>
-                  )}
+                 
                 </FormControl>
                 
               </FormItem>
             )}
           />
 
-          {/* Email */}
-          <FormField
-            control={form.control}
-            name="identifier"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="email"
-                    {...field}
-                  />
-                </FormControl>
-                
-              </FormItem>
-            )}
-          />
+        
 
           {/* Password */}
           <FormField
@@ -136,17 +111,9 @@ const Page = () => {
 
           <Button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded" 
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please Wait
-              </>
-            ) : (
-              "Sign Up"
-            )}
+            Sign In
           </Button>
         </form>
       </Form>
@@ -155,11 +122,11 @@ const Page = () => {
         <p className="text-sm text-gray-600">
           Already a member?{" "}
           <Link
-            href="/sign-in"
-            className="text-blue-600 hover:text-blue-800 font-medium b-2 border border-blue-600"
-          >
-            Sign in
-          </Link>
+              href="/sign-in"
+              className="font-medium text-blue-600 hover:text-blue-800"
+            >
+              Sign In
+            </Link>
         </p>
       </div>
     </div>
