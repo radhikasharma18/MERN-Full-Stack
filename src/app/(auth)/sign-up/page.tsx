@@ -16,10 +16,10 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from '@/src/components/ui/form';
+import { Input } from '@/src/components/ui/input';
 import { Loader2 } from 'lucide-react';
+import { Button } from '@/src/components/ui/button';
 
 interface ApiResponse {
   success: boolean;
@@ -128,6 +128,7 @@ const Page = () => {
 
                   <FormControl>
                     <Input
+                      className ="rounded"
                       placeholder="Enter username"
                       {...field}
                       onChange={(e) => {
@@ -165,6 +166,7 @@ const Page = () => {
 
                   <FormControl>
                     <Input
+                      className ="rounded"
                       type="email"
                       placeholder="Enter email"
                       {...field}
@@ -183,6 +185,7 @@ const Page = () => {
 
                   <FormControl>
                     <Input
+                    className ="rounded"
                       type="password"
                       placeholder="Enter password"
                       {...field}
@@ -195,7 +198,7 @@ const Page = () => {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full"
+              className="w-full bg-black hover:bg-black/50 text-white font-medium py-2 px-4 rounded"
             >
               {isSubmitting ? (
                 <>
@@ -214,7 +217,7 @@ const Page = () => {
             Already a member?{' '}
             <Link
               href="/sign-in"
-              className="font-medium text-blue-600 hover:text-blue-800"
+              className="font-medium text-black hover:text-black/50 "
             >
               Sign In
             </Link>

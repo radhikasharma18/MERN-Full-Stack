@@ -8,11 +8,14 @@ import { useRouter } from 'next/navigation';
 import { signInSchema} from '@/src/schemas/signInSchema';
 import axios, { AxiosError } from 'axios';
 import { toast } from "sonner";
-import {Form, FormControl, FormField, FormItem, FormLabel}  from "@/components/ui/form";
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import {Form, FormControl, FormField, FormItem, FormLabel}  from "@/src/components/ui/form";
+
+
 import  Link  from 'next/link';
 import { signIn } from 'next-auth/react';
+import { Input } from '@/src/components/ui/input';
+import { Button } from '@/src/components/ui/button';
+
 
 interface ApiResponse {
   success: boolean;
@@ -77,6 +80,7 @@ const Page = () => {
                 <FormLabel>Email/Username</FormLabel>
                 <FormControl>
                   <Input
+                  className ="rounded"
                     type="email"
                     placeholder="email/username"
                     {...field}
@@ -99,6 +103,7 @@ const Page = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
+                  className ="rounded"
                     type="password"
                     placeholder="password"
                     {...field}
@@ -111,7 +116,7 @@ const Page = () => {
 
           <Button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded" 
+            className="w-full bg-black hover:bg-black/50 text-white font-medium py-2 px-4 rounded" 
           >
             Sign In
           </Button>
@@ -123,7 +128,7 @@ const Page = () => {
           Already a member?{" "}
           <Link
               href="/sign-in"
-              className="font-medium text-blue-600 hover:text-blue-800"
+              className="font-medium text-black hover:text-black/50"
             >
               Sign In
             </Link>
