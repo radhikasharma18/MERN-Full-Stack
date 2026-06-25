@@ -9,10 +9,10 @@ import { verifySchema } from '@/src/schemas/verifySchema';
 import * as z from 'zod';
 import axios, { Axios, AxiosError } from 'axios';
 import { apiResponse } from '@/src/types/ApiResponse';
-import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Form } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
+import { FormControl, FormField, FormItem, FormLabel } from '@/src/components/ui/form';
+import { Input } from '@/src/components/ui/input';
+import { Form } from '@/src/components/ui/form';
+import { Button } from '@/src/components/ui/button';
 
 
 const VerifyAccount = () => {
