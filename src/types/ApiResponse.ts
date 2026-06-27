@@ -1,8 +1,8 @@
-import {Message} from "../modules/User";
+import { Message } from "../modules/User";
 
-export interface apiResponse{
-    success: boolean;
-    message: string;
-    isAcceptingMessages?: boolean;
-    messages?: Array<Message>
+export interface apiResponse {
+  success: boolean;
+  message: string;
+  isAcceptingMessage?: boolean;
+  messages?: Message[];
 }
