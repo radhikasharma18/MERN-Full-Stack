@@ -1,7 +1,7 @@
 'use client';
 
 import { Message } from "@/src/modules/User"
-import {useCallback, useState } from "react"
+import {useCallback, useEffect, useState } from "react"
 import {toast} from "sonner"
 import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form";
@@ -62,40 +62,54 @@ const Page = () => {
         toast.success("Messages refreshed successfully");
       }
     }catch(error){
+      
+      const axiosError = error as AxiosError<apiResponse>;
+      toast.error(
+        axiosError.response?.data.message ?? "Failed to fetch accept message status",
+        {
+          description: axiosError.response?.data.message|| "Failed to fetch accept message status",
+        }
+      );
 
     }
-  }, []);
+     finally{
+      setIsLoading(false);
+      setIsSwitchloading(false);
+    } 
+  }, [setIsLoading, setMessages]);
 
+useEffect(() => {
+if (!session|| !session.user) return; 
+  fetchAcceptMessage();
+  fetchMessages();
+}, [setValue,session,fetchAcceptMessage, fetchMessages]);
+const handleSwitchChange = async () => {
+  try{
+    const response = await axios.post<apiResponse>("/api/accept-messages", {
+      isAcceptingMessage: !acceptMessage,
+    });
+     setValue('isAcceptingMessage',!acceptMessage);
+     toast.success(response.data.message || "Accept message status updated successfully");
+  }catch(error){
+     const axiosError = error as AxiosError<apiResponse>;
+      toast.error(
+        axiosError.response?.data.message ?? "Failed to fetch accept message status",
+        {
+          description: axiosError.response?.data.message|| "Failed to fetch accept message status",
+        }
+      );
 
-    return (
+  }
+}
+   if(!session || !session.user) {
+    return
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-        <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-md">
-            <div className="text-center">
-                <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
-                    Welcome to Mystery Message
-                </h1>
-                <p className="text-gray-600">
-                    Your anonymous adventure starts here. Sign up or log in to begin!
-                </p>
-            </div>
-            <div className="flex justify-center space-x-4">
-                <a
-                    href="/sign-up"
-                    className="bg-black hover:bg-black/50 text-white font-medium py-2 px-4 rounded"
-                >
-                    Sign Up
-                </a>
-                <a
-                    href="/sign-in"
-                    className="bg-black hover:bg-black/50 text-white font-medium py-2 px-4 rounded"
-                >
-                    Log In
-                </a>
-            </div>
-        </div>
-    </div>
-  );
+      please login to access the dashboard.
+      </div>} 
+      
+
 }
 
 export default Page;
+
  
