@@ -10,5 +10,8 @@
     "title": "Message from MysteryGuest",
     "message": " do you have any book recommendations for me?",
     "received": "2minutes ago"
-
-}]
+    },{
+    "title": "Message from user",
+    "message": "hey, how are you doing today?",
+    "received": "10minutes ago"
+    }]
