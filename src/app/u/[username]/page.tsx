@@ -8,7 +8,9 @@ const Page = ({ params }: { params: { username: string } }) => {
         <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-md">
             <div className="text-center">
                 <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
-                    Welcome to Mystery Message
+                   
+                    radhika  This is a placeholder page for the user profile. You can customize this page to display user-specific information and content.
+                     radhika  This is a placeholder page for the user profile. You can customize this page to display user-specific information and content.
                 </h1>
                 <p className="text-gray-600">
                   radhika  This is a placeholder page for the user profile. You can customize this page to display user-specific information and content.
