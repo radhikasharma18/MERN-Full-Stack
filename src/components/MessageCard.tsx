@@ -16,7 +16,7 @@ type MessageCardProps = {
 const MessageCard = ({message, onDelete}: {message: { _id: string }, onDelete: (message: { _id: string }) => void}) => {
   const router = useRouter();
   const handleDelete = async() => {
-    const response = await axios.delete<{ Response: string }>(`/api/messages/${message._id}`);       
+    const response = await axios.delete<{ Response: string }>(`/api/delete-message/${message._id}`);       
     toast.success(response.data.Response);
     onDelete({ _id: message._id as string });
     
