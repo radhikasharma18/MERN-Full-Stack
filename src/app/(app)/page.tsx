@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Carousel,
+  Carousel, 
   CarouselContent,
   CarouselItem,
   CarouselNext,
