@@ -35,7 +35,7 @@ export default function Home() {
             <CarouselItem key={index}>
               <Card>
                 <CardContent className="flex min-h-[200px] items-center justify-center p-6">
-                  <p className="text-center ">{item.message}</p>
+                  <p className="text-center text-md">{item.message}</p>
                 </CardContent>
               </Card>
             </CarouselItem>
